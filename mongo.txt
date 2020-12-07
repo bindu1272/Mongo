@@ -1,0 +1,23 @@
+Task1 : 
+1) Create a Database "MongoPractise"
+Queries:
+ use mongopractise
+output:
+switched to db mongopractise
+
+Task2 : 
+2) Create a Collection "Tasks"
+Queries:
+ db.createCollection("tasks")
+ output:
+{ ok: 1 }
+
+Task3 :
+3) Insert the one document with fields studentId,studentName,studentAge,subjects,Marks.
+	DataTypes :
+	studentId = Long
+	studnetName = string
+	studentAge = int
+	subjects = array 
+	Marks = int
+Queries:
