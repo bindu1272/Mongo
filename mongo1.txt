@@ -1,0 +1,256 @@
+taks11 :
+11) Create another collection called task2 and insterdata 8 documents with below fields
+
+	studentId:Long
+	Name : String
+	fullName : Object contains firstName and lastName
+	subjects : array ( one student can one subjects or more)
+	marks : int
+	percentage : float
+	backlogs:int(optional if backlogs contains then int or otherwise don't create a field backlogs)
+
+
+Queries:
+
+db.task2.insertOne({
+... "studentId" : NumberLong("151000"),
+... "name" : "john",
+... "fullname" : {"firstName" : "john","lastName" : "wolf"},
+... "subjects" : ["telugu","english"],
+... "marks" : 60,
+... "percentage" : NumberDecimal("8.6")
+... })
+
+ db.task2.insertMany([
+... {
+..... "studentId" : NumberLong("151001"),
+..... "name" : "tobias",
+..... "fullname" : {"firstName" : "tobias","lastName" : "short"},
+..... "subjects" : ["telugu","english","maths"],
+..... "marks" : 20,
+..... "percentage" : NumberDecimal("4.6"),
+..... "backlogs" : 3
+..... },
+... {
+..... "studentId" : NumberLong("151002"),
+..... "name" : "alias",
+..... "fullname" : {"firstName" : "alias","lastName" : "tom"},
+..... "subjects" : ["telugu"],
+..... "marks" : 40,
+..... "percentage" : NumberDecimal("6.0"),
+..... "backlogs" : 2
+..... },
+... {
+..... "studentId" : NumberLong("151003"),
+..... "name" : "alska",
+..... "fullname" : {"firstName" : "alska","lastName" : "moom"},
+..... "subjects" : ["telugu","physics"],
+..... "marks" : 60,
+..... "backlogs" : 1
+..... },
+... {
+..... "studentId" : NumberLong("151004"),
+..... "name" : "bismila",
+..... "fullname" : {"firstName" : "bismila","lastName" : "kalab"},
+..... "subjects" : ["datastructures"],
+..... "marks" : 80,
+..... "percentage" : NumberDecimal("9.3"),
+..... },
+... {
+..... "studentId" : NumberLong("151005"),
+..... "name" : "bheeshma",
+..... "fullname" : {"firstName" : "bheeshma","lastName" : "lotus"},
+..... "subjects" : ["physics"],
+..... "marks" : 50,
+..... "percentage" : NumberDecimal("5.0"),
+..... "backlogs" : 1
+..... }
+... ])
+
+
+Task12 :
+12) print all results you doesn't have backlogs
+
+Queries:
+ db.task2.find({"backlogs" : {"$exists" : false}})
+[
+  {
+    _id: ObjectId("5fcf23151b3e35032c1be503"),
+    studentId: 151000,
+    name: 'john',
+    fullname: { firstName: 'john', lastName: 'wolf' },
+    subjects: [ 'telugu', 'english' ],
+    marks: 60,
+    percentage: NumberDecimal("8.6")
+  },
+  {
+    _id: ObjectId("5fcf27221b3e35032c1be507"),
+    studentId: 151004,
+    name: 'bismila',
+    fullname: { firstName: 'bismila', lastName: 'kalab' },
+    subjects: [ 'datastructures' ],
+    marks: 80,
+    percentage: NumberDecimal("9.3")
+  }
+]
+
+Task13 :
+13) Update the fullName for any studentId
+Queries:
+db.task2.update({"_id" : ObjectId("5fcf23151b3e35032c1be503")},{$set : {"fullName" : {
+    "firstName" : "bindu","lastName" : "Vankayalapati"}}})
+Output:
+DeprecationWarning: Collection.update() is deprecated. Use updateOne, updateMany or bulkWrite.
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+
+
+Task14:
+14) Update the subjects by adding or deleting the subjects for studentId if the particular subjects
+Queries:
+ db.task2.find({},{"_id":1})
+[
+  { _id: ObjectId("5fcf23151b3e35032c1be503") },
+  { _id: ObjectId("5fcf27221b3e35032c1be504") },
+  { _id: ObjectId("5fcf27221b3e35032c1be505") },
+  { _id: ObjectId("5fcf27221b3e35032c1be506") },
+  { _id: ObjectId("5fcf27221b3e35032c1be507") },
+  { _id: ObjectId("5fcf27221b3e35032c1be508") }
+]
+ db.task2.updateOne({"_id" : ObjectId("5fcf23151b3e35032c1be503")},{$set:{"subjects" : ["maths"]}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+> db.task2.find({"_id" :   ObjectId("5fcf23151b3e35032c1be503")})
+[
+  {
+    _id: ObjectId("5fcf23151b3e35032c1be503"),
+    studentId: 151000,
+    name: 'john',
+    fullname: { firstName: 'john', lastName: 'wolf' },
+    subjects: [ 'maths' ],
+    marks: 60,
+    percentage: NumberDecimal("8.6"),
+    fullName: { firstName: 'bindu', lastName: 'Vankayalapati' }
+  }
+]
+
+Output:
+
+
+Task15 :
+15) print all results who has > 50%
+Queries:
+ db.task2.find({"percentage" : {$gt:5}})
+ Output:
+[
+  {
+    _id: ObjectId("5fcf23151b3e35032c1be503"),
+    studentId: 151000,
+    name: 'john',
+    fullname: { firstName: 'john', lastName: 'wolf' },
+    subjects: [ 'telugu', 'english' ],
+    marks: 60,
+    percentage: NumberDecimal("8.6"),
+    fullName: { firstName: 'bindu', lastName: 'Vankayalapati' }
+  },
+  {
+    _id: ObjectId("5fcf27221b3e35032c1be505"),
+    studentId: 151002,
+    name: 'alias',
+    fullname: { firstName: 'alias', lastName: 'tom' },
+    subjects: [ 'telugu' ],
+    marks: 40,
+    percentage: NumberDecimal("6.0"),
+    backlogs: 2
+  },
+  {
+    _id: ObjectId("5fcf27221b3e35032c1be507"),
+    studentId: 151004,
+    name: 'bismila',
+    fullname: { firstName: 'bismila', lastName: 'kalab' },
+    subjects: [ 'datastructures' ],
+    marks: 80,
+    percentage: NumberDecimal("9.3")
+  }
+]
+
+
+Task16 :
+16) print all results who has backlogs
+
+Queries:
+ db.task2.find({"backlogs": {"$exists":true}})
+ Output:
+[
+  {
+    _id: ObjectId("5fcf27221b3e35032c1be504"),
+    studentId: 151001,
+    name: 'tobias',
+    fullname: { firstName: 'tobias', lastName: 'short' },
+    subjects: [ 'telugu', 'english', 'maths' ],
+    marks: 20,
+    percentage: NumberDecimal("4.6"),
+    backlogs: 3
+  },
+  {
+    _id: ObjectId("5fcf27221b3e35032c1be505"),
+    studentId: 151002,
+    name: 'alias',
+    fullname: { firstName: 'alias', lastName: 'tom' },
+    subjects: [ 'telugu' ],
+    marks: 40,
+    percentage: NumberDecimal("6.0"),
+    backlogs: 2
+  },
+  {
+    _id: ObjectId("5fcf27221b3e35032c1be506"),
+    studentId: 151003,
+    name: 'alska',
+    fullname: { firstName: 'alska', lastName: 'moom' },
+    subjects: [ 'telugu', 'physics' ],
+    marks: 60,
+    backlogs: 1
+  },
+  {
+    _id: ObjectId("5fcf27221b3e35032c1be508"),
+    studentId: 151005,
+    name: 'bheeshma',
+    fullname: { firstName: 'bheeshma', lastName: 'lotus' },
+    subjects: [ 'physics' ],
+    marks: 50,
+    percentage: NumberDecimal("5.0"),
+    backlogs: 1
+  }
+]
+
+
+Task18:
+
+18) delete the backlogs fields for the students who has percentage above 50%
+
+Queries:
+
+Output:
+
+
+Task17 :
+17) print all results who has different marks (means if duplicate have you need to print first occurence)
+
+Queries:
+ db.task2.distinct("marks")
+Output:
+[ 20, 40, 50, 60, 80 ]
+
+
+ 

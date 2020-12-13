@@ -21,3 +21,323 @@ Task3 :
 	subjects = array 
 	Marks = int
 Queries:
+db.queries.insertOne({
+...  "studentId" : NumberLong("151272"),
+... "studentName" : "bindu",
+... "studentAge" : 20,
+... "subjects" : ["maths","science","social"],
+... "marks" : 50
+... })
+output:
+{
+    acknowledged: true,
+  insertedId: ObjectId("5fce57891b3e35032c1be500")
+}
+
+task4:
+4) Insert Many documents at a time
+Queries:
+ db.queries.insertMany([
+... {
+.....  "studentId" : NumberLong("150231"),
+..... "studentName" : "varma",
+..... "studentAge" : 40,
+..... "subjects" : ["maths","science","social"],
+..... "marks" : 50
+..... },
+... {
+.....  "studentId" : NumberLong("150135"),
+..... "studentName" : "pavani",
+..... "studentAge" : 20,
+..... "subjects" : ["maths","science","social"],
+..... "marks" : 50
+..... },
+... ])
+output:
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId("5fce588c1b3e35032c1be501"),
+    '1': ObjectId("5fce588c1b3e35032c1be502")
+  }
+}
+
+task5 :
+5) Print all results
+queries:
+ db.queries.find({}).pretty()
+[
+  {
+    _id: ObjectId("5fce57891b3e35032c1be500"),
+    studentId: 151272,
+    studentName: 'bindu',
+    studentAge: 20,
+    subjects: [ 'maths', 'science', 'social' ],
+    marks: 50
+  },
+  {
+    _id: ObjectId("5fce588c1b3e35032c1be501"),
+    studentId: 150231,
+    studentName: 'varma',
+    studentAge: 40,
+    subjects: [ 'maths', 'science', 'social' ],
+    marks: 50
+  },
+  {
+    _id: ObjectId("5fce588c1b3e35032c1be502"),
+    studentId: 150135,
+    studentName: 'pavani',
+    studentAge: 20,
+    subjects: [ 'maths', 'science', 'social' ],
+    marks: 50
+  }
+]
+
+
+task6:
+6) print the result with studentId
+Queries:
+ db.queries.find({"studentId" : 151272})
+[
+  {
+    _id: ObjectId("5fce57891b3e35032c1be500"),
+    studentId: 151272,
+    studentName: 'bindu',
+    studentAge: 20,
+    subjects: [ 'maths', 'science', 'social' ],
+    marks: 50
+  }
+]
+
+
+task10:
+10) Print all documents with fields contain only studentId and StudentMarks
+
+Queries:
+ db.queries.find({"marks":50,"subjects" : "maths"})
+[
+  {
+    _id: ObjectId("5fce57891b3e35032c1be500"),
+    studentId: 151272,
+    studentName: 'bindu',
+    studentAge: 20,
+    subjects: [ 'maths', 'science', 'social' ],
+    marks: 50
+  },
+  {
+    _id: ObjectId("5fce588c1b3e35032c1be501"),
+    studentId: 150231,
+    studentName: 'varma',
+    studentAge: 40,
+    subjects: [ 'maths', 'science', 'social' ],
+    marks: 50
+  },
+  {
+    _id: ObjectId("5fce588c1b3e35032c1be502"),
+    studentId: 150135,
+    studentName: 'pavani',
+    studentAge: 20,
+    subjects: [ 'maths', 'science', 'social' ],
+    marks: 50
+  }
+]
+
+Extratask:
+Queries:
+ db.queries.find({"marks":50,"subjects" : "maths"}).limit(2)
+[
+  {
+    _id: ObjectId("5fce57891b3e35032c1be500"),
+    studentId: 151272,
+    studentName: 'bindu',
+    studentAge: 20,
+    subjects: [ 'maths', 'science', 'social' ],
+    marks: 50
+  },
+  {
+    _id: ObjectId("5fce588c1b3e35032c1be501"),
+    studentId: 150231,
+    studentName: 'varma',
+    studentAge: 40,
+    subjects: [ 'maths', 'science', 'social' ],
+    marks: 50
+  }
+]
+
+
+Extratask:
+ db.queries.find({"marks":50,"subjects" : "maths"}).skip(2)
+[
+  {
+    _id: ObjectId("5fce588c1b3e35032c1be502"),
+    studentId: 150135,
+    studentName: 'pavani',
+    studentAge: 20,
+    subjects: [ 'maths', 'science', 'social' ],
+    marks: 50
+  }
+]
+
+
+
+task7:
+7) print the result with subjects and marks
+
+Queries:
+db.queries.find({},{"subjects":1,"marks" : 1})
+[
+  {
+    _id: ObjectId("5fce57891b3e35032c1be500"),
+    subjects: [ 'maths', 'science', 'social' ],
+    marks: 50
+  },
+  {
+    _id: ObjectId("5fce588c1b3e35032c1be501"),
+    subjects: [ 'maths', 'science', 'social' ],
+    marks: 50
+  },
+  {
+    _id: ObjectId("5fce588c1b3e35032c1be502"),
+    subjects: [ 'maths', 'science', 'social' ],
+    marks: 50
+  }
+]
+
+ db.queries.find({},{"subjects":1,"marks" : 1,"_id" : 0})
+[
+  { subjects: [ 'maths', 'science', 'social' ], marks: 50 },
+  { subjects: [ 'maths', 'science', 'social' ], marks: 50 },
+  { subjects: [ 'maths', 'science', 'social' ], marks: 50 }
+]
+
+task8 :
+8) Print the result age > 15
+
+Queries:
+ db.queries.find({"studentAge": {$gt:15}})
+[
+  {
+    _id: ObjectId("5fce57891b3e35032c1be500"),
+    studentId: 151272,
+    studentName: 'bindu',
+    studentAge: 20,
+    subjects: [ 'maths', 'science', 'social' ],
+    marks: 50
+  },
+  {
+    _id: ObjectId("5fce588c1b3e35032c1be501"),
+    studentId: 150231,
+    studentName: 'varma',
+    studentAge: 40,
+    subjects: [ 'maths', 'science', 'social' ],
+    marks: 50
+  },
+  {
+    _id: ObjectId("5fce588c1b3e35032c1be502"),
+    studentId: 150135,
+    studentName: 'pavani',
+    studentAge: 20,
+    subjects: [ 'maths', 'science', 'social' ],
+    marks: 50
+  }
+]
+
+Extratask:
+ db.queries.find({"studentAge": {$lt:15}})
+
+
+
+task9 :
+9) Print the result in ascending order with name
+
+Queries:
+ db.queries.find({}).sort({"studentName":1})
+[
+  {
+    _id: ObjectId("5fce57891b3e35032c1be500"),
+    studentId: 151272,
+    studentName: 'bindu',
+    studentAge: 20,
+    subjects: [ 'maths', 'science', 'social' ],
+    marks: 50
+  },
+  {
+    _id: ObjectId("5fce588c1b3e35032c1be502"),
+    studentId: 150135,
+    studentName: 'pavani',
+    studentAge: 20,
+    subjects: [ 'maths', 'science', 'social' ],
+    marks: 50
+  },
+  {
+    _id: ObjectId("5fce588c1b3e35032c1be501"),
+    studentId: 150231,
+    studentName: 'varma',
+    studentAge: 40,
+    subjects: [ 'maths', 'science', 'social' ],
+    marks: 50
+  }
+]
+
+
+Extratask:
+Queries:
+  db.queries.find({"subjects":"social"})
+[
+  {
+    _id: ObjectId("5fce57891b3e35032c1be500"),
+    studentId: 151272,
+    studentName: 'bindu',
+    studentAge: 20,
+    subjects: [ 'maths', 'science', 'social' ],
+    marks: 50
+  },
+  {
+    _id: ObjectId("5fce588c1b3e35032c1be501"),
+    studentId: 150231,
+    studentName: 'varma',
+    studentAge: 40,
+    subjects: [ 'maths', 'science', 'social' ],
+    marks: 50
+  },
+  {
+    _id: ObjectId("5fce588c1b3e35032c1be502"),
+    studentId: 150135,
+    studentName: 'pavani',
+    studentAge: 20,
+    subjects: [ 'maths', 'science', 'social' ],
+    marks: 50
+  }
+]
+
+
+Extratask:
+Descendingorder
+Queries:
+ db.queries.find({}).sort({"_id" :-1})
+[
+  {
+    _id: ObjectId("5fce588c1b3e35032c1be502"),
+    studentId: 150135,
+    studentName: 'pavani',
+    studentAge: 20,
+    subjects: [ 'maths', 'science', 'social' ],
+    marks: 50
+  },
+  {
+    _id: ObjectId("5fce588c1b3e35032c1be501"),
+    studentId: 150231,
+    studentName: 'varma',
+    studentAge: 40,
+    subjects: [ 'maths', 'science', 'social' ],
+    marks: 50
+  },
+  {
+    _id: ObjectId("5fce57891b3e35032c1be500"),
+    studentId: 151272,
+    studentName: 'bindu',
+    studentAge: 20,
+    subjects: [ 'maths', 'science', 'social' ],
+    marks: 50
+  }
+]
